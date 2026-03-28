@@ -452,11 +452,11 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div>
                         <label class="block text-white/80 text-sm font-medium mb-2" data-zh="您的姓名" data-en="Your Name">您的姓名</label>
-                        <input type="text" required placeholder="张三" class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3.5 text-white placeholder-white/40 focus:outline-none focus:border-brand-400 transition">
+                        <input type="text" name="name" required placeholder="张三" class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3.5 text-white placeholder-white/40 focus:outline-none focus:border-brand-400 transition">
                     </div>
                     <div>
                         <label class="block text-white/80 text-sm font-medium mb-2" data-zh="邮箱地址" data-en="Email Address">邮箱地址</label>
-                        <input type="email" required placeholder="you@example.com" class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3.5 text-white placeholder-white/40 focus:outline-none focus:border-brand-400 transition">
+                        <input type="email" name="email" required placeholder="you@example.com" class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3.5 text-white placeholder-white/40 focus:outline-none focus:border-brand-400 transition">
                     </div>
                 </div>
                 <div>
@@ -470,7 +470,7 @@
                 </div>
                 <div>
                     <label class="block text-white/80 text-sm font-medium mb-2" data-zh="您的需求" data-en="Your Needs">您的需求</label>
-                    <textarea rows="4" required placeholder="请简单描述您的需求..." class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3.5 text-white placeholder-white/40 focus:outline-none focus:border-brand-400 transition resize-none"></textarea>
+                    <textarea rows="4" name="message" required placeholder="请简单描述您的需求..." class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3.5 text-white placeholder-white/40 focus:outline-none focus:border-brand-400 transition resize-none"></textarea>
                 </div>
                 <button type="submit" class="w-full bg-white text-brand-700 font-bold text-lg py-4 rounded-xl hover:bg-brand-50 transition shadow-2xl">
                     <span data-zh="立即提交 →" data-en="Submit Now →">立即提交 →</span>
