@@ -1,607 +1,307 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI建站 - 快速打造专业网站 | AI Website Builder</title>
-    <meta name="description" content="使用AI人工智能，在几分钟内创建专业级网站。无需编程基础，三步搞定网站建设。">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: { 'inter': ['Inter', 'sans-serif'] },
-                    colors: {
-                        brand: {
-                            50: '#f0f7ff', 100: '#e0effe', 200: '#b9dffd', 300: '#70c2fb', 400: '#289df5', 500: '#1079e0', 600: '#0c5fb4', 700: '#0e4d8a', 800: '#113f6e', 900: '#0f3458'
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        * { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
-        .gradient-hero { background: linear-gradient(135deg, #0f3458 0%, #1079e0 50%, #289df5 100%); }
-        .gradient-text { background: linear-gradient(90deg, #1079e0, #289df5); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .glass { background: rgba(255,255,255,0.08); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.15); }
-        .card-hover { transition: transform 0.3s ease, box-shadow 0.3s ease; }
-        .card-hover:hover { transform: translateY(-6px); box-shadow: 0 20px 60px rgba(16,121,224,0.15); }
-        .float-animation { animation: float 6s ease-in-out infinite; }
-        @keyframes float { 0%,100% { transform: translateY(0px); } 50% { transform: translateY(-20px); } }
-        .pulse-glow { animation: pulseGlow 3s ease-in-out infinite; }
-        @keyframes pulseGlow { 0%,100% { box-shadow: 0 0 20px rgba(40,157,245,0.3); } 50% { box-shadow: 0 0 40px rgba(40,157,245,0.6); } }
-        .gradient-border { position: relative; }
-        .gradient-border::before { content:''; position:absolute; inset:-2px; border-radius:inherit; background: linear-gradient(135deg,#1079e0,#289df5,#70c2fb); z-index:-1; opacity:0; transition:opacity 0.3s; }
-        .gradient-border:hover::before { opacity:1; }
-        .nav-blur { backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
-        .section-fade { opacity:0; transform:translateY(30px); transition:opacity 0.8s ease,transform 0.8s ease; }
-        .section-fade.visible { opacity:1; transform:translateY(0); }
-        .testimonial-card { transition: all 0.3s ease; }
-        .testimonial-card:hover { transform: scale(1.02); }
-        .lang-btn { transition: all 0.2s; }
-        .lang-btn.active { background: #1079e0; color: white; }
-        /* 移动端菜单 */
-        .mobile-menu { transform: translateX(100%); transition: transform 0.3s ease; }
-        .mobile-menu.open { transform: translateX(0); }
-        /* 暗色滚动条 */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #0f3458; }
-        ::-webkit-scrollbar-thumb { background: #289df5; border-radius: 4px; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI建站 | 30秒生成专属落地页</title>
+  <meta name="description" content="输入您的业务描述，AI在30秒内为您生成一个专业的落地页。支持多种风格，手机自适应，无需任何技术背景。">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * { font-family: 'Inter', 'PingFang SC', sans-serif; }
+    .gradient-text { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .gradient-hero { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); }
+    .glass { background: rgba(255,255,255,0.05); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); }
+    .float { animation: float 3s ease-in-out infinite; }
+    .pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+    @keyframes float { 0%,100%{ transform: translateY(0px); } 50%{ transform: translateY(-12px); } }
+    @keyframes pulse-glow { 0%,100%{ box-shadow: 0 0 20px rgba(102,126,234,0.3); } 50%{ box-shadow: 0 0 40px rgba(102,126,234,0.6); } }
+    .site-card { transition: all 0.3s ease; }
+    .site-card:hover { transform: translateY(-8px) scale(1.02); }
+    .step-line { position: absolute; top: 24px; left: 50%; width: 2px; height: calc(100% - 48px); background: linear-gradient(to bottom, #667eea, #764ba2); }
+  </style>
 </head>
-<body class="bg-white text-gray-900 antialiased">
+<body class="bg-gray-950 text-white">
 
-    <!-- 语言切换 + 导航栏 -->
-    <nav class="fixed top-0 w-full z-50 nav-blur bg-white/80 border-b border-gray-100" id="navbar">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <!-- Logo -->
-                <div class="flex items-center gap-2">
-                    <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-brand-600 to-brand-400 flex items-center justify-center">
-                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                    </div>
-                    <span class="text-lg font-bold text-brand-700" data-zh="AI建站" data-en="AI Builder">AI建站</span>
-                </div>
-                <!-- 桌面端导航 -->
-                <div class="hidden md:flex items-center gap-8">
-                    <a href="#features" class="text-sm font-medium text-gray-600 hover:text-brand-600 transition" data-zh="功能" data-en="Features">功能</a>
-                    <a href="#pricing" class="text-sm font-medium text-gray-600 hover:text-brand-600 transition" data-zh="定价" data-en="Pricing">定价</a>
-                    <a href="#about" class="text-sm font-medium text-gray-600 hover:text-brand-600 transition" data-zh="关于" data-en="About">关于</a>
-                    <a href="#contact" class="text-sm font-medium text-gray-600 hover:text-brand-600 transition" data-zh="联系" data-en="Contact">联系</a>
-                </div>
-                <!-- 右侧 -->
-                <div class="flex items-center gap-3">
-                    <!-- 语言切换 -->
-                    <div class="flex items-center bg-gray-100 rounded-lg p-1 gap-1">
-                        <button onclick="setLang('zh')" class="lang-btn active text-xs font-semibold px-3 py-1.5 rounded-md" id="lang-zh">中文</button>
-                        <button onclick="setLang('en')" class="lang-btn text-xs font-semibold px-3 py-1.5 rounded-md text-gray-500" id="lang-en">EN</button>
-                    </div>
-                    <a href="#contact" class="hidden sm:inline-flex bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition shadow-lg shadow-brand-600/25">
-                        <span data-zh="免费试用" data-en="Free Trial">免费试用</span>
-                    </a>
-                    <!-- 移动端汉堡 -->
-                    <button onclick="toggleMobile()" class="md:hidden p-2 rounded-lg hover:bg-gray-100">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <!-- 移动端菜单 -->
-    <div class="mobile-menu fixed inset-0 z-50 bg-white flex flex-col" id="mobileMenu">
-        <div class="flex items-center justify-between p-4 border-b">
-            <span class="text-lg font-bold text-brand-700">AI建站</span>
-            <button onclick="toggleMobile()" class="p-2 rounded-lg hover:bg-gray-100">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-            </button>
-        </div>
-        <div class="flex flex-col gap-2 p-4">
-            <a href="#features" onclick="toggleMobile()" class="text-lg font-medium text-gray-700 hover:text-brand-600 py-3 border-b" data-zh="功能介绍" data-en="Features">功能介绍</a>
-            <a href="#pricing" onclick="toggleMobile()" class="text-lg font-medium text-gray-700 hover:text-brand-600 py-3 border-b" data-zh="价格套餐" data-en="Pricing">价格套餐</a>
-            <a href="#about" onclick="toggleMobile()" class="text-lg font-medium text-gray-700 hover:text-brand-600 py-3 border-b" data-zh="关于我们" data-en="About Us">关于我们</a>
-            <a href="#contact" onclick="toggleMobile()" class="text-lg font-medium text-gray-700 hover:text-brand-600 py-3 border-b" data-zh="联系我们" data-en="Contact Us">联系我们</a>
-            <a href="#contact" class="mt-4 bg-brand-600 text-white text-center font-semibold px-5 py-3.5 rounded-xl shadow-lg">
-                <span data-zh="免费开始使用" data-en="Get Started Free">免费开始使用</span>
-            </a>
-        </div>
+  <!-- Nav -->
+  <nav class="fixed top-0 w-full z-50 bg-gray-950/80 backdrop-blur-md border-b border-gray-800">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+      <div class="text-xl font-bold"><span class="gradient-text">AI</span>建站</div>
+      <div class="flex gap-6 items-center text-sm text-gray-400">
+        <a href="#features" class="hover:text-white transition">功能</a>
+        <a href="#examples" class="hover:text-white transition">案例</a>
+        <a href="#pricing" class="hover:text-white transition">价格</a>
+        <a href="#try" class="px-5 py-2 bg-purple-600 hover:bg-purple-700 rounded-full text-white font-medium transition">立即体验</a>
+      </div>
     </div>
+  </nav>
 
-    <!-- Hero区 -->
-    <section class="gradient-hero min-h-screen flex items-center relative overflow-hidden pt-16">
-        <!-- 背景装饰 -->
-        <div class="absolute inset-0 overflow-hidden">
-            <div class="absolute top-20 left-10 w-72 h-72 bg-white/5 rounded-full blur-3xl"></div>
-            <div class="absolute bottom-20 right-10 w-96 h-96 bg-blue-400/10 rounded-full blur-3xl"></div>
-            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-brand-500/5 rounded-full blur-3xl"></div>
-            <!-- 网格背景 -->
-            <svg class="absolute inset-0 w-full h-full opacity-[0.03]" xmlns="http://www.w3.org/2000/svg">
-                <defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" stroke-width="1"/></pattern></defs>
-                <rect width="100%" height="100%" fill="url(#grid)"/></svg>
+  <!-- Hero -->
+  <section class="gradient-hero min-h-screen flex items-center justify-center text-center px-6 pt-20 pb-16">
+    <div class="max-w-4xl">
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-900/30 border border-purple-500/30 text-purple-300 text-sm mb-8">
+        <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+        公众号AI客服已集成上线
+      </div>
+      <h1 class="text-5xl md:text-7xl font-black mb-6 leading-tight">
+        <span class="gradient-text">30秒</span><br>
+        <span class="text-white">生成专属落地页</span>
+      </h1>
+      <p class="text-xl text-gray-400 mb-10 max-w-2xl mx-auto leading-relaxed">
+        输入您的业务描述，AI自动生成专业落地页。无需设计技能，无需代码知识。<br>
+        支持微信内直接访问，适合各类中小企业和个人创业者。
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+        <a href="#try" class="px-10 py-4 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 rounded-full text-lg font-bold transition shadow-2xl shadow-purple-600/30 float">
+          立即体验 →
+        </a>
+        <a href="#examples" class="px-10 py-4 glass rounded-full text-lg font-medium hover:bg-white/10 transition">
+          查看案例
+        </a>
+      </div>
+      <div class="flex justify-center gap-8 text-sm text-gray-500">
+        <span>✓ 无需信用卡</span>
+        <span>✓ 30秒生成</span>
+        <span>✓ 微信直接访问</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="py-24 bg-gray-900">
+    <div class="max-w-5xl mx-auto px-6">
+      <h2 class="text-4xl font-bold text-center mb-16">简单3步，立刻拥有网站</h2>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="text-center">
+          <div class="w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-purple-600 to-purple-800 flex items-center justify-center text-2xl font-bold shadow-lg">1</div>
+          <h3 class="text-xl font-bold mb-3">描述您的业务</h3>
+          <p class="text-gray-400">在公众号对话框输入，比如："瑜伽馆，主打私教课，风格清新自然"</p>
         </div>
-
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-            <!-- 标签 -->
-            <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur border border-white/20 rounded-full px-5 py-2 mb-8">
-                <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-                <span class="text-white/90 text-sm font-medium" data-zh="AI驱动 · 30秒完成建站" data-en="AI-Powered · Build in 30 Seconds">AI驱动 · 30秒完成建站</span>
-            </div>
-
-            <!-- 主标题 -->
-            <h1 class="text-4xl sm:text-5xl md:text-7xl font-black text-white leading-tight mb-6">
-                <span data-zh="用AI人工智能" data-en="Build Websites with">用AI人工智能</span><br>
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-200 via-white to-cyan-200" data-zh="打造专业级网站" data-en="AI — Professional Sites">打造专业级网站</span>
-            </h1>
-
-            <!-- 副标题 -->
-            <p class="text-lg sm:text-xl md:text-2xl text-white/70 max-w-3xl mx-auto mb-10 leading-relaxed" data-zh="无需任何编程知识，三步搞定网站建设。AI自动生成设计文案，一次创作，多端适配。" data-en="No coding required. Three simple steps to create professional websites. AI-generated designs and copy, perfectly responsive.">
-                无需任何编程知识，三步搞定网站建设。AI自动生成设计文案，一次创作，多端适配。
-            </p>
-
-            <!-- CTA按钮 -->
-            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
-                <a href="#contact" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white text-brand-700 font-bold text-lg px-8 py-4 rounded-2xl shadow-2xl hover:shadow-white/20 transition pulse-glow">
-                    <span data-zh="免费开始使用 →" data-en="Get Started Free →">免费开始使用 →</span>
-                </a>
-                <a href="#features" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 border border-white/30 text-white font-semibold text-lg px-8 py-4 rounded-2xl hover:bg-white/10 transition">
-                    <span data-zh="了解更多" data-en="Learn More">了解更多</span>
-                </a>
-            </div>
-
-            <!-- 数据统计 -->
-            <div class="grid grid-cols-3 gap-4 sm:gap-8 max-w-2xl mx-auto">
-                <div class="glass rounded-2xl p-4 sm:p-6">
-                    <div class="text-2xl sm:text-4xl font-black text-white mb-1">50K+</div>
-                    <div class="text-white/60 text-xs sm:text-sm" data-zh="用户信赖" data-en="Happy Users">用户信赖</div>
-                </div>
-                <div class="glass rounded-2xl p-4 sm:p-6">
-                    <div class="text-2xl sm:text-4xl font-black text-white mb-1">120+</div>
-                    <div class="text-white/60 text-xs sm:text-sm" data-zh="模板选择" data-en="Templates">模板选择</div>
-                </div>
-                <div class="glass rounded-2xl p-4 sm:p-6">
-                    <div class="text-2xl sm:text-4xl font-black text-white mb-1">99.9%</div>
-                    <div class="text-white/60 text-xs sm:text-sm" data-zh="运行稳定" data-en="Uptime">运行稳定</div>
-                </div>
-            </div>
+        <div class="text-center">
+          <div class="w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-purple-600 to-purple-800 flex items-center justify-center text-2xl font-bold shadow-lg">2</div>
+          <h3 class="text-xl font-bold mb-3">AI自动生成</h3>
+          <p class="text-gray-400">30秒内生成专属落地页，包含品牌介绍、产品展示、联系方式等完整内容</p>
         </div>
-
-        <!-- 向下滚动提示 -->
-        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/40 animate-bounce">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+        <div class="text-center">
+          <div class="w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-purple-600 to-purple-800 flex items-center justify-center text-2xl font-bold shadow-lg">3</div>
+          <h3 class="text-xl font-bold mb-3">微信直接访问</h3>
+          <p class="text-gray-400">链接直接发送到微信，随时分享给客户。支持临时体验和永久托管</p>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <!-- 功能介绍 -->
-    <section id="features" class="py-20 sm:py-28 bg-gray-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <!-- 标题 -->
-            <div class="text-center mb-16 section-fade">
-                <div class="inline-block bg-brand-50 text-brand-600 text-sm font-bold px-4 py-1.5 rounded-full mb-4" data-zh="核心功能" data-en="Core Features">核心功能</div>
-                <h2 class="text-3xl sm:text-4xl md:text-5xl font-black text-gray-900 mb-4" data-zh="为什么选择我们？" data-en="Why Choose Us?">为什么选择我们？</h2>
-                <p class="text-gray-500 text-lg max-w-2xl mx-auto" data-zh="强大的AI能力，简洁的操作体验，让每个人都能轻松建站" data-en="Powerful AI capabilities with a simple experience — anyone can build a professional website">强大的AI能力，简洁的操作体验，让每个人都能轻松建站</p>
-            </div>
-
-            <!-- 功能卡片网格 -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-                <!-- 功能1 -->
-                <div class="bg-white rounded-2xl p-8 card-hover border border-gray-100 section-fade">
-                    <div class="w-14 h-14 bg-gradient-to-br from-blue-500 to-cyan-400 rounded-2xl flex items-center justify-center mb-6">
-                        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-3" data-zh="AI智能生成" data-en="AI Smart Generation">AI智能生成</h3>
-                    <p class="text-gray-500 leading-relaxed" data-zh="描述你的业务，AI自动生成完整网站内容、布局和设计，一次成型无需修改" data-en="Describe your business and AI generates complete website content, layout, and design instantly">描述你的业务，AI自动生成完整网站内容、布局和设计，一次成型无需修改</p>
-                </div>
-                <!-- 功能2 -->
-                <div class="bg-white rounded-2xl p-8 card-hover border border-gray-100 section-fade">
-                    <div class="w-14 h-14 bg-gradient-to-br from-purple-500 to-pink-400 rounded-2xl flex items-center justify-center mb-6">
-                        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-3" data-zh="响应式设计" data-en="Responsive Design">响应式设计</h3>
-                    <p class="text-gray-500 leading-relaxed" data-zh="自动适配手机、平板、电脑，所有设备上都能呈现完美视觉效果" data-en="Automatically adapts to mobile, tablet, and desktop for perfect visuals on all devices">自动适配手机、平板、电脑，所有设备上都能呈现完美视觉效果</p>
-                </div>
-                <!-- 功能3 -->
-                <div class="bg-white rounded-2xl p-8 card-hover border border-gray-100 section-fade">
-                    <div class="w-14 h-14 bg-gradient-to-br from-amber-500 to-orange-400 rounded-2xl flex items-center justify-center mb-6">
-                        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"/></svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-3" data-zh="丰富模板" data-en="Rich Templates">丰富模板</h3>
-                    <p class="text-gray-500 leading-relaxed" data-zh="120+精心设计的行业模板，涵盖电商、作品集、企业官网、个人博客等场景" data-en="120+ professionally designed templates for e-commerce, portfolios, business sites, blogs, and more">120+精心设计的行业模板，涵盖电商、作品集、企业官网、个人博客等场景</p>
-                </div>
-                <!-- 功能4 -->
-                <div class="bg-white rounded-2xl p-8 card-hover border border-gray-100 section-fade">
-                    <div class="w-14 h-14 bg-gradient-to-br from-green-500 to-emerald-400 rounded-2xl flex items-center justify-center mb-6">
-                        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-3" data-zh="无需代码" data-en="No Coding Required">无需代码</h3>
-                    <p class="text-gray-500 leading-relaxed" data-zh="拖拽式编辑器，所见即所得，无需任何编程基础，人人都能上手" data-en="Drag-and-drop editor with live preview. No coding skills needed, anyone can use it">拖拽式编辑器，所见即所得，无需任何编程基础，人人都能上手</p>
-                </div>
-                <!-- 功能5 -->
-                <div class="bg-white rounded-2xl p-8 card-hover border border-gray-100 section-fade">
-                    <div class="w-14 h-14 bg-gradient-to-br from-red-500 to-rose-400 rounded-2xl flex items-center justify-center mb-6">
-                        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-3" data-zh="SEO优化" data-en="SEO Optimization">SEO优化</h3>
-                    <p class="text-gray-500 leading-relaxed" data-zh="内置SEO最佳实践，自动生成Meta标签、结构化数据，提升搜索排名" data-en="Built-in SEO best practices with auto-generated Meta tags and structured data for better rankings">内置SEO最佳实践，自动生成Meta标签、结构化数据，提升搜索排名</p>
-                </div>
-                <!-- 功能6 -->
-                <div class="bg-white rounded-2xl p-8 card-hover border border-gray-100 section-fade">
-                    <div class="w-14 h-14 bg-gradient-to-br from-indigo-500 to-violet-400 rounded-2xl flex items-center justify-center mb-6">
-                        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-3" data-zh="全球加速" data-en="Global CDN">全球加速</h3>
-                    <p class="text-gray-500 leading-relaxed" data-zh="覆盖全球的CDN节点，毫秒级加载，为访客提供极速访问体验" data-en="Global CDN coverage with millisecond loading for fast visitor experience worldwide">覆盖全球的CDN节点，毫秒级加载，为访客提供极速访问体验</p>
-                </div>
-            </div>
+  <!-- Features -->
+  <section id="features" class="py-24 bg-gray-950">
+    <div class="max-w-6xl mx-auto px-6">
+      <h2 class="text-4xl font-bold text-center mb-4">为什么选择AI建站？</h2>
+      <p class="text-gray-400 text-center mb-16">传统建站需要几天，我们只需要30秒</p>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="glass rounded-2xl p-8 hover:bg-white/8 transition">
+          <div class="text-3xl mb-4">⚡</div>
+          <h3 class="text-lg font-bold mb-2">30秒极速生成</h3>
+          <p class="text-gray-400 text-sm">传统建站需要几天，我们只需要30秒。输入描述，立即看到结果。</p>
         </div>
-    </section>
-
-    <!-- 定价 -->
-    <section id="pricing" class="py-20 sm:py-28 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16 section-fade">
-                <div class="inline-block bg-brand-50 text-brand-600 text-sm font-bold px-4 py-1.5 rounded-full mb-4" data-zh="价格套餐" data-en="Pricing Plans">价格套餐</div>
-                <h2 class="text-3xl sm:text-4xl md:text-5xl font-black text-gray-900 mb-4" data-zh="简单透明的定价" data-en="Simple, Transparent Pricing">简单透明的定价</h2>
-                <p class="text-gray-500 text-lg max-w-2xl mx-auto" data-zh="按需选择，灵活升级，没有任何隐藏费用" data-en="Choose as you need, upgrade flexibly, no hidden fees">按需选择，灵活升级，没有任何隐藏费用</p>
-            </div>
-
-            <!-- 套餐卡片 -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto">
-                <!-- 免费版 -->
-                <div class="border border-gray-200 rounded-2xl p-8 hover:border-brand-300 transition section-fade">
-                    <div class="text-gray-500 font-semibold mb-2" data-zh="免费版" data-en="Free">免费版</div>
-                    <div class="flex items-end gap-1 mb-6">
-                        <span class="text-5xl font-black text-gray-900">¥0</span>
-                        <span class="text-gray-400 mb-2" data-zh="/永久" data-en="/forever">/永久</span>
-                    </div>
-                    <p class="text-gray-500 text-sm mb-8" data-zh="适合个人体验和简单项目" data-en="Perfect for personal projects and simple sites">适合个人体验和简单项目</p>
-                    <ul class="space-y-4 mb-8">
-                        <li class="flex items-center gap-3 text-gray-700"><svg class="w-5 h-5 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg><span data-zh="3个网站额度" data-en="3 website slots">3个网站额度</span></li>
-                        <li class="flex items-center gap-3 text-gray-700"><svg class="w-5 h-5 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg><span data-zh="基础模板库" data-en="Basic template library">基础模板库</span></li>
-                        <li class="flex items-center gap-3 text-gray-700"><svg class="w-5 h-5 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg><span data-zh="500MB存储空间" data-en="500MB storage">500MB存储空间</span></li>
-                        <li class="flex items-center gap-3 text-gray-400"><svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg><span data-zh="自定义域名" data-en="Custom domain">自定义域名</span></li>
-                        <li class="flex items-center gap-3 text-gray-400"><svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg><span data-zh="高级AI功能" data-en="Advanced AI features">高级AI功能</span></li>
-                    </ul>
-                    <a href="#contact" class="block text-center border-2 border-gray-200 text-gray-700 font-bold py-3.5 rounded-xl hover:border-brand-500 hover:text-brand-600 transition" data-zh="免费开始" data-en="Get Started Free">免费开始</a>
-                </div>
-
-                <!-- 专业版 -->
-                <div class="border-2 border-brand-500 rounded-2xl p-8 relative shadow-xl shadow-brand-500/10 section-fade">
-                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-brand-500 text-white text-xs font-bold px-4 py-1.5 rounded-full" data-zh="最受欢迎" data-en="Most Popular">最受欢迎</div>
-                    <div class="text-brand-600 font-semibold mb-2" data-zh="专业版" data-en="Pro">专业版</div>
-                    <div class="flex items-end gap-1 mb-6">
-                        <span class="text-5xl font-black text-gray-900">¥99</span>
-                        <span class="text-gray-400 mb-2" data-zh="/月" data-en="/mo">/月</span>
-                    </div>
-                    <p class="text-gray-500 text-sm mb-8" data-zh="适合自由职业者和小型团队" data-en="Ideal for freelancers and small teams">适合自由职业者和小型团队</p>
-                    <ul class="space-y-4 mb-8">
-                        <li class="flex items-center gap-3 text-gray-700"><svg class="w-5 h-5 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg><span data-zh="无限网站额度" data-en="Unlimited websites">无限网站额度</span></li>
-                        <li class="flex items-center gap-3 text-gray-700"><svg class="w-5 h-5 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg><span data-zh="全部120+模板" data-en="All 120+ templates">全部120+模板</span></li>
-                        <li class="flex items-center gap-3 text-gray-700"><svg class="w-5 h-5 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg><span data-zh="20GB存储空间" data-en="20GB storage">20GB存储空间</span></li>
-                        <li class="flex items-center gap-3 text-gray-700"><svg class="w-5 h-5 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg><span data-zh="自定义域名" data-en="Custom domain">自定义域名</span></li>
-                        <li class="flex items-center gap-3 text-gray-700"><svg class="w-5 h-5 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg><span data-zh="高级AI功能（无限次）" data-en="Advanced AI (unlimited)">高级AI功能（无限次）</span></li>
-                        <li class="flex items-center gap-3 text-gray-700"><svg class="w-5 h-5 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg><span data-zh="优先客户支持" data-en="Priority support">优先客户支持</span></li>
-                    </ul>
-                    <a href="#contact" class="block text-center bg-brand-600 hover:bg-brand-700 text-white font-bold py-3.5 rounded-xl transition shadow-lg shadow-brand-600/30" data-zh="立即升级" data-en="Upgrade Now">立即升级</a>
-                </div>
-
-                <!-- 企业版 -->
-                <div class="border border-gray-200 rounded-2xl p-8 hover:border-brand-300 transition section-fade">
-                    <div class="text-gray-500 font-semibold mb-2" data-zh="企业版" data-en="Enterprise">企业版</div>
-                    <div class="flex items-end gap-1 mb-6">
-                        <span class="text-5xl font-black text-gray-900">¥399</span>
-                        <span class="text-gray-400 mb-2" data-zh="/月" data-en="/mo">/月</span>
-                    </div>
-                    <p class="text-gray-500 text-sm mb-8" data-zh="适合中大型企业和代理商" data-en="For large teams and agencies">适合中大型企业和代理商</p>
-                    <ul class="space-y-4 mb-8">
-                        <li class="flex items-center gap-3 text-gray-700"><svg class="w-5 h-5 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg><span data-zh="无限一切" data-en="Everything unlimited">无限一切</span></li>
-                        <li class="flex items-center gap-3 text-gray-700"><svg class="w-5 h-5 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg><span data-zh="100GB存储空间" data-en="100GB storage">100GB存储空间</span></li>
-                        <li class="flex items-center gap-3 text-gray-700"><svg class="w-5 h-5 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg><span data-zh="白标定制" data-en="White-label">白标定制</span></li>
-                        <li class="flex items-center gap-3 text-gray-700"><svg class="w-5 h-5 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg><span data-zh="API接口访问" data-en="API access">API接口访问</span></li>
-                        <li class="flex items-center gap-3 text-gray-700"><svg class="w-5 h-5 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg><span data-zh="专属客户经理" data-en="Dedicated account manager">专属客户经理</span></li>
-                        <li class="flex items-center gap-3 text-gray-700"><svg class="w-5 h-5 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg><span data-zh="SLA服务保障" data-en="SLA guarantee">SLA服务保障</span></li>
-                    </ul>
-                    <a href="#contact" class="block text-center border-2 border-gray-200 text-gray-700 font-bold py-3.5 rounded-xl hover:border-brand-500 hover:text-brand-600 transition" data-zh="联系销售" data-en="Contact Sales">联系销售</a>
-                </div>
-            </div>
-
-            <!-- 备注 -->
-            <p class="text-center text-gray-400 text-sm mt-8" data-zh="所有套餐均为人民币/月，支持支付宝和微信支付，年付享8折优惠" data-en="All plans in CNY/month. Alipay & WeChat supported. 20% off with annual billing">所有套餐均为人民币/月，支持支付宝和微信支付，年付享8折优惠</p>
+        <div class="glass rounded-2xl p-8 hover:bg-white/8 transition">
+          <div class="text-3xl mb-4">🎨</div>
+          <h3 class="text-lg font-bold mb-2">专业设计水准</h3>
+          <p class="text-gray-400 text-sm">AI生成专业级设计，包括渐变、动画、响应式布局，无需设计师。</p>
         </div>
-    </section>
-
-    <!-- 关于我们 -->
-    <section id="about" class="py-20 sm:py-28 bg-gray-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-                <!-- 左侧文案 -->
-                <div class="section-fade">
-                    <div class="inline-block bg-brand-50 text-brand-600 text-sm font-bold px-4 py-1.5 rounded-full mb-6" data-zh="关于我们" data-en="About Us">关于我们</div>
-                    <h2 class="text-3xl sm:text-4xl md:text-5xl font-black text-gray-900 mb-6 leading-tight" data-zh="让每个人都能拥抱数字时代" data-en="Empowering Everyone in the Digital Age">让每个人都能拥抱数字时代</h2>
-                    <p class="text-gray-500 text-lg leading-relaxed mb-6" data-zh="我们相信，一个强大的在线presence不应该只属于懂技术的人。AI建站成立于2023年，使命是用人工智能彻底简化网站建设流程，让任何人都能在几分钟内创建一个专业级的网站。" data-en="We believe a powerful online presence shouldn't require technical expertise. Founded in 2023, our mission is to revolutionize website building with AI — so anyone can create a professional site in minutes.">
-                        我们相信，一个强大的在线presence不应该只属于懂技术的人。AI建站成立于2023年，使命是用人工智能彻底简化网站建设流程，让任何人都能在几分钟内创建一个专业级的网站。
-                    </p>
-                    <p class="text-gray-500 text-lg leading-relaxed mb-8" data-zh="我们的团队汇集了来自Google、腾讯、阿里巴巴等顶尖科技公司的AI工程师和产品设计师，共同打造这款革命性的建站工具。" data-en="Our team brings together AI engineers and product designers from Google, Tencent, and Alibaba to build this revolutionary tool.">
-                        我们的团队汇集了来自Google、腾讯、阿里巴巴等顶尖科技公司的AI工程师和产品设计师，共同打造这款革命性的建站工具。
-                    </p>
-                    <!-- 团队成员 -->
-                    <div class="flex items-center gap-4">
-                        <div class="flex -space-x-3">
-                            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 border-2 border-white flex items-center justify-center text-white font-bold text-sm">张</div>
-                            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-purple-400 to-purple-600 border-2 border-white flex items-center justify-center text-white font-bold text-sm">李</div>
-                            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 border-2 border-white flex items-center justify-center text-white font-bold text-sm">王</div>
-                            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-green-400 to-green-600 border-2 border-white flex items-center justify-center text-white font-bold text-sm">陈</div>
-                        </div>
-                        <div>
-                            <div class="text-gray-900 font-bold" data-zh="50,000+ 用户信赖" data-en="50,000+ Users Trust Us">50,000+ 用户信赖</div>
-                            <div class="text-gray-400 text-sm" data-zh="遍布全球120+国家" data-en="Across 120+ countries">遍布全球120+国家</div>
-                        </div>
-                    </div>
-                </div>
-                <!-- 右侧图片/装饰 -->
-                <div class="section-fade relative">
-                    <div class="bg-gradient-to-br from-brand-50 to-blue-50 rounded-3xl p-8 lg:p-12">
-                        <div class="grid grid-cols-2 gap-4">
-                            <div class="bg-white rounded-2xl p-6 shadow-sm">
-                                <div class="text-4xl font-black text-brand-600 mb-2">2023</div>
-                                <div class="text-gray-500 text-sm" data-zh="产品上线" data-en="Product Launch">产品上线</div>
-                            </div>
-                            <div class="bg-white rounded-2xl p-6 shadow-sm">
-                                <div class="text-4xl font-black text-brand-600 mb-2">A轮</div>
-                                <div class="text-gray-500 text-sm" data-zh="融资完成" data-en="Series A Closed">融资完成</div>
-                            </div>
-                            <div class="bg-white rounded-2xl p-6 shadow-sm">
-                                <div class="text-4xl font-black text-brand-600 mb-2">30+</div>
-                                <div class="text-gray-500 text-sm" data-zh="团队成员" data-en="Team Members">团队成员</div>
-                            </div>
-                            <div class="bg-white rounded-2xl p-6 shadow-sm">
-                                <div class="text-4xl font-black text-brand-600 mb-2">4.9</div>
-                                <div class="text-gray-500 text-sm flex items-center gap-1" data-zh="用户评分 ⭐" data-en="User Rating ⭐">用户评分 ⭐</div>
-                            </div>
-                        </div>
-                        <!-- 引言 -->
-                        <div class="mt-6 bg-white rounded-2xl p-6 border-l-4 border-brand-500">
-                            <p class="text-gray-700 italic mb-3" data-zh=""最好的技术，是让人感受不到技术存在的技术"" data-en=""The best technology is technology you don't notice."">"最好的技术，是让人感受不到技术存在的技术"</p>
-                            <div class="text-gray-400 text-sm" data-zh="— 图灵AI建站创始人" data-en="— Turing, AI Builder Founder">— 图灵AI建站创始人</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="glass rounded-2xl p-8 hover:bg-white/8 transition">
+          <div class="text-3xl mb-4">📱</div>
+          <h3 class="text-lg font-bold mb-2">完美移动端适配</h3>
+          <p class="text-gray-400 text-sm">所有页面自动适配手机、平板、电脑。微信内打开体验流畅。</p>
         </div>
-    </section>
-
-    <!-- 用户评价 -->
-    <section class="py-20 sm:py-28 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16 section-fade">
-                <div class="inline-block bg-brand-50 text-brand-600 text-sm font-bold px-4 py-1.5 rounded-full mb-4" data-zh="用户评价" data-en="Testimonials">用户评价</div>
-                <h2 class="text-3xl sm:text-4xl md:text-5xl font-black text-gray-900 mb-4" data-zh="来自真实用户的声音" data-en="What Our Users Say">来自真实用户的声音</h2>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="testimonial-card bg-gray-50 rounded-2xl p-8 section-fade">
-                    <div class="flex gap-1 mb-4">
-                        <svg class="w-5 h-5 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                        <svg class="w-5 h-5 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                        <svg class="w-5 h-5 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                        <svg class="w-5 h-5 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                        <svg class="w-5 h-5 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                    </div>
-                    <p class="text-gray-600 mb-6" data-zh="作为一个设计师，我终于可以快速把自己的作品集上线了。以前用传统建站工具要花好几天，现在30分钟就搞定！" data-en="As a designer, I can finally publish my portfolio quickly. Used to take days with traditional tools — now it takes 30 minutes!">作为一个设计师，我终于可以快速把自己的作品集上线了。以前用传统建站工具要花好几天，现在30分钟就搞定！</p>
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-pink-400 to-rose-500 flex items-center justify-center text-white font-bold text-sm">林</div>
-                        <div>
-                            <div class="font-bold text-gray-900" data-zh="林小艺" data-en="Lin Xiaoyi">林小艺</div>
-                            <div class="text-gray-400 text-sm" data-zh="自由设计师" data-en="Freelance Designer">自由设计师</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card bg-gray-50 rounded-2xl p-8 section-fade">
-                    <div class="flex gap-1 mb-4">
-                        <svg class="w-5 h-5 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                        <svg class="w-5 h-5 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                        <svg class="w-5 h-5 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                        <svg class="w-5 h-5 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                        <svg class="w-5 h-5 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                    </div>
-                    <p class="text-gray-600 mb-6" data-zh="我们公司用AI建站做企业官网，访客转化率提升了40%！模板设计非常专业，SEO效果也很好。" data-en="Our company website built with AI Builder increased visitor conversion by 40%! Professional templates and great SEO results.">我们公司用AI建站做企业官网，访客转化率提升了40%！模板设计非常专业，SEO效果也很好。</p>
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-indigo-500 flex items-center justify-center text-white font-bold text-sm">张</div>
-                        <div>
-                            <div class="font-bold text-gray-900" data-zh="张明远" data-en="Zhang Mingyuan">张明远</div>
-                            <div class="text-gray-400 text-sm" data-zh="创业公司CEO" data-en="Startup CEO">创业公司CEO</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card bg-gray-50 rounded-2xl p-8 section-fade">
-                    <div class="flex gap-1 mb-4">
-                        <svg class="w-5 h-5 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                        <svg class="w-5 h-5 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                        <svg class="w-5 h-5 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                        <svg class="w-5 h-5 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                        <svg class="w-5 h-5 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                    </div>
-                    <p class="text-gray-600 mb-6" data-zh="我自己开网店卖手工艺品，AI建站帮我快速搭建了一个精美的在线商店，上线第一个月就有订单了！" data-en="I run an online shop selling handmade crafts. AI Builder helped me set up a beautiful store quickly — got orders in the first month!">我自己开网店卖手工艺品，AI建站帮我快速搭建了一个精美的在线商店，上线第一个月就有订单了！</p>
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center text-white font-bold text-sm">周</div>
-                        <div>
-                            <div class="font-bold text-gray-900" data-zh="周小燕" data-en="Zhou Xiaoyan">周小燕</div>
-                            <div class="text-gray-400 text-sm" data-zh="手工艺创业者" data-en="Craft Entrepreneur">手工艺创业者</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="glass rounded-2xl p-8 hover:bg-white/8 transition">
+          <div class="text-3xl mb-4">💬</div>
+          <h3 class="text-lg font-bold mb-2">微信内直接触达</h3>
+          <p class="text-gray-400 text-sm">链接直接发送到客户微信，无需跳转浏览器，转化率更高。</p>
         </div>
-    </section>
-
-    <!-- 联系表单 -->
-    <section id="contact" class="py-20 sm:py-28 gradient-hero relative overflow-hidden">
-        <div class="absolute inset-0">
-            <div class="absolute top-20 right-20 w-72 h-72 bg-white/5 rounded-full blur-3xl"></div>
-            <div class="absolute bottom-20 left-20 w-96 h-96 bg-blue-400/10 rounded-full blur-3xl"></div>
+        <div class="glass rounded-2xl p-8 hover:bg-white/8 transition">
+          <div class="text-3xl mb-4">🔄</div>
+          <h3 class="text-lg font-bold mb-2">随时修改调整</h3>
+          <p class="text-gray-400 text-sm">不满意？告诉AI想改什么，立刻生成新版。不限次数，直到满意为止。</p>
         </div>
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="text-center mb-12 section-fade">
-                <div class="inline-block bg-white/10 text-white text-sm font-bold px-4 py-1.5 rounded-full mb-4 backdrop-blur border border-white/20" data-zh="联系我们" data-en="Contact Us">联系我们</div>
-                <h2 class="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4" data-zh="准备好开始了吗？" data-en="Ready to Get Started?">准备好开始了吗？</h2>
-                <p class="text-white/60 text-lg" data-zh="填写表单，我们的团队会在24小时内回复您" data-en="Fill out the form and our team will respond within 24 hours">填写表单，我们的团队会在24小时内回复您</p>
-            </div>
-
-            <form class="bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl p-8 sm:p-10 space-y-5 section-fade" id="contactForm" onsubmit="handleSubmit(event)">
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                    <div>
-                        <label class="block text-white/80 text-sm font-medium mb-2" data-zh="您的姓名" data-en="Your Name">您的姓名</label>
-                        <input type="text" name="name" required placeholder="张三" class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3.5 text-white placeholder-white/40 focus:outline-none focus:border-brand-400 transition">
-                    </div>
-                    <div>
-                        <label class="block text-white/80 text-sm font-medium mb-2" data-zh="邮箱地址" data-en="Email Address">邮箱地址</label>
-                        <input type="email" name="email" required placeholder="you@example.com" class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3.5 text-white placeholder-white/40 focus:outline-none focus:border-brand-400 transition">
-                    </div>
-                </div>
-                <div>
-                    <label class="block text-white/80 text-sm font-medium mb-2" data-zh="选择套餐" data-en="Select Plan">选择套餐</label>
-                    <select class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3.5 text-white/80 focus:outline-none focus:border-brand-400 transition appearance-none cursor-pointer">
-                        <option value="" class="text-gray-900">请选择...</option>
-                        <option value="free" class="text-gray-900">免费版</option>
-                        <option value="pro" class="text-gray-900">专业版 ¥99/月</option>
-                        <option value="enterprise" class="text-gray-900">企业版 ¥399/月</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-white/80 text-sm font-medium mb-2" data-zh="您的需求" data-en="Your Needs">您的需求</label>
-                    <textarea rows="4" name="message" required placeholder="请简单描述您的需求..." class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3.5 text-white placeholder-white/40 focus:outline-none focus:border-brand-400 transition resize-none"></textarea>
-                </div>
-                <button type="submit" class="w-full bg-white text-brand-700 font-bold text-lg py-4 rounded-xl hover:bg-brand-50 transition shadow-2xl">
-                    <span data-zh="立即提交 →" data-en="Submit Now →">立即提交 →</span>
-                </button>
-                <p class="text-white/40 text-xs text-center" data-zh="提交即表示您同意我们的服务条款和隐私政策" data-en="By submitting, you agree to our Terms of Service and Privacy Policy">提交即表示您同意我们的服务条款和隐私政策</p>
-            </form>
-
-            <div id="successMsg" class="hidden bg-white/10 backdrop-blur-lg border border-green-400/30 rounded-3xl p-8 sm:p-10 text-center">
-                <div class="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <svg class="w-8 h-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                </div>
-                <h3 class="text-2xl font-bold text-white mb-2" data-zh="提交成功！" data-en="Submission Successful!">提交成功！</h3>
-                <p class="text-white/60" data-zh="感谢您的留言，我们会在24小时内回复您" data-en="Thank you! Our team will respond within 24 hours">感谢您的留言，我们会在24小时内回复您</p>
-            </div>
+        <div class="glass rounded-2xl p-8 hover:bg-white/8 transition">
+          <div class="text-3xl mb-4">💰</div>
+          <h3 class="text-lg font-bold mb-2">极低成本体验</h3>
+          <p class="text-gray-400 text-sm">免费体验临时链接。付费解锁永久链接和完整源码。</p>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <!-- 页脚 -->
-    <footer class="bg-gray-900 text-white pt-16 pb-8">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
-                <div class="col-span-2 md:col-span-1">
-                    <div class="flex items-center gap-2 mb-4">
-                        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-brand-600 to-brand-400 flex items-center justify-center">
-                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                        </div>
-                        <span class="text-lg font-bold">AI建站</span>
-                    </div>
-                    <p class="text-gray-400 text-sm leading-relaxed" data-zh="用AI人工智能，让每个人都能轻松创建专业级网站" data-en="AI-powered website building for everyone">用AI人工智能，让每个人都能轻松创建专业级网站</p>
-                </div>
-                <div>
-                    <h4 class="font-bold mb-4 text-sm" data-zh="产品" data-en="Product">产品</h4>
-                    <ul class="space-y-2.5">
-                        <li><a href="#features" class="text-gray-400 hover:text-white text-sm transition">功能介绍</a></li>
-                        <li><a href="#pricing" class="text-gray-400 hover:text-white text-sm transition">价格套餐</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white text-sm transition">模板市场</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white text-sm transition">更新日志</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="font-bold mb-4 text-sm" data-zh="公司" data-en="Company">公司</h4>
-                    <ul class="space-y-2.5">
-                        <li><a href="#about" class="text-gray-400 hover:text-white text-sm transition">关于我们</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white text-sm transition">博客</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white text-sm transition">加入团队</a></li>
-                        <li><a href="#contact" class="text-gray-400 hover:text-white text-sm transition">联系我们</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="font-bold mb-4 text-sm" data-zh="法律" data-en="Legal">法律</h4>
-                    <ul class="space-y-2.5">
-                        <li><a href="#" class="text-gray-400 hover:text-white text-sm transition">服务条款</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white text-sm transition">隐私政策</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white text-sm transition">Cookie政策</a></li>
-                    </ul>
-                </div>
+  <!-- Examples -->
+  <section id="examples" class="py-24 bg-gray-900">
+    <div class="max-w-6xl mx-auto px-6">
+      <h2 class="text-4xl font-bold text-center mb-4">AI生成的案例</h2>
+      <p class="text-gray-400 text-center mb-16">点击即可查看真实由AI生成的落地页</p>
+      <div class="grid md:grid-cols-3 gap-8">
+        <!-- Example 1: Yoga -->
+        <a href="https://ysywlkj.xyz/temp/f06b4fae.html" target="_blank" class="site-card glass rounded-2xl overflow-hidden cursor-pointer block">
+          <div class="h-48 bg-gradient-to-br from-purple-600 to-pink-600 flex items-center justify-center">
+            <div class="text-center text-white">
+              <div class="text-4xl mb-2">🧘</div>
+              <div class="text-sm opacity-80">瑜伽馆</div>
             </div>
-            <div class="border-t border-gray-800 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-                <p class="text-gray-500 text-sm">© 2024 AI Builder. <span data-zh="版权所有" data-en="All rights reserved">版权所有</span>.</p>
-                <div class="flex items-center gap-4">
-                    <a href="#" class="text-gray-400 hover:text-white transition"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.84 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/></svg></a>
-                    <a href="#" class="text-gray-400 hover:text-white transition"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.6.11.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg></a>
-                    <a href="#" class="text-gray-400 hover:text-white transition"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
-                </div>
+          </div>
+          <div class="p-6">
+            <div class="text-sm text-purple-400 mb-1">🧘 瑜伽健身</div>
+            <h3 class="font-bold mb-1">慢时光瑜伽馆</h3>
+            <p class="text-gray-400 text-sm">私教课 + 团课，清新自然风格</p>
+          </div>
+        </a>
+        <!-- Example 2: Coffee -->
+        <a href="https://ysywlkj.xyz/temp/c533363b.html" target="_blank" class="site-card glass rounded-2xl overflow-hidden cursor-pointer block">
+          <div class="h-48 bg-gradient-to-br from-amber-600 to-orange-700 flex items-center justify-center">
+            <div class="text-center text-white">
+              <div class="text-4xl mb-2">☕</div>
+              <div class="text-sm opacity-80">咖啡店</div>
             </div>
+          </div>
+          <div class="p-6">
+            <div class="text-sm text-purple-400 mb-1">☕ 餐饮美食</div>
+            <h3 class="font-bold mb-1">慢时光手冲咖啡</h3>
+            <p class="text-gray-400 text-sm">手冲咖啡 + 甜点，复古文艺风</p>
+          </div>
+        </a>
+        <!-- Example 3: Drone -->
+        <a href="https://ysywlkj.xyz/temp/0845db05.html" target="_blank" class="site-card glass rounded-2xl overflow-hidden cursor-pointer block">
+          <div class="h-48 bg-gradient-to-br from-slate-700 to-slate-900 flex items-center justify-center">
+            <div class="text-center text-white">
+              <div class="text-4xl mb-2">✈️</div>
+              <div class="text-sm opacity-80">无人机</div>
+            </div>
+          </div>
+          <div class="p-6">
+            <div class="text-sm text-purple-400 mb-1">✈️ 科技制造</div>
+            <h3 class="font-bold mb-1">疆安航空科技</h3>
+            <p class="text-gray-400 text-sm">无人机定制开发，高大上风格</p>
+          </div>
+        </a>
+      </div>
+      <p class="text-center text-gray-500 text-sm mt-8">真实案例 · 点击即可预览</p>
+    </div>
+  </section>
+
+  <!-- Try Now -->
+  <section id="try" class="py-24 gradient-hero">
+    <div class="max-w-3xl mx-auto px-6 text-center">
+      <h2 class="text-4xl md:text-5xl font-bold mb-6">现在就开始体验</h2>
+      <p class="text-xl text-gray-300 mb-10">关注公众号，发送"建站"，AI立刻为您生成专属落地页</p>
+      <div class="glass rounded-3xl p-10 max-w-md mx-auto pulse-glow">
+        <div class="text-6xl mb-6">📱</div>
+        <h3 class="text-2xl font-bold mb-3">微信公众号</h3>
+        <p class="text-gray-400 mb-6">搜索或扫码关注：<span class="text-white font-medium">AI建站服务</span></p>
+        <div class="inline-block p-4 bg-white rounded-xl">
+          <p class="text-gray-600 text-sm mb-2">发送消息：<strong>建站</strong></p>
+          <p class="text-gray-500 text-xs">AI将在30秒内为您生成网站</p>
         </div>
-    </footer>
+      </div>
+    </div>
+  </section>
 
-    <script>
-    function setLang(lang) {
-        document.querySelectorAll('[data-' + lang + ']').forEach(el => {
-            const text = el.getAttribute('data-' + lang);
-            if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
-                el.placeholder = el.getAttribute('data-placeholder-' + lang) || text;
-            } else {
-                el.textContent = text;
-            }
-        });
-        document.getElementById('lang-zh').classList.toggle('active', lang === 'zh');
-        document.getElementById('lang-en').classList.toggle('active', lang === 'en');
-        document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
-        localStorage.setItem('ai-builder-lang', lang);
-    }
+  <!-- Pricing -->
+  <section id="pricing" class="py-24 bg-gray-950">
+    <div class="max-w-5xl mx-auto px-6">
+      <h2 class="text-4xl font-bold text-center mb-4">简单透明的定价</h2>
+      <p class="text-gray-400 text-center mb-16">按需选择，无需年费</p>
+      <div class="grid md:grid-cols-3 gap-8">
+        <!-- Free -->
+        <div class="glass rounded-2xl p-8">
+          <div class="text-sm text-gray-400 mb-2">体验版</div>
+          <div class="text-4xl font-black mb-1">免费</div>
+          <div class="text-gray-500 text-sm mb-6">限时体验</div>
+          <ul class="space-y-3 mb-8 text-sm">
+            <li class="flex items-center gap-2 text-gray-300"><span class="text-green-400">✓</span> 1个落地页生成</li>
+            <li class="flex items-center gap-2 text-gray-300"><span class="text-green-400">✓</span> 24小时有效链接</li>
+            <li class="flex items-center gap-2 text-gray-300"><span class="text-green-400">✓</span> 基础设计模板</li>
+            <li class="flex items-center gap-2 text-gray-500"><span class="text-gray-600">✗</span> 永久链接</li>
+            <li class="flex items-center gap-2 text-gray-500"><span class="text-gray-600">✗</span> 完整源码</li>
+          </ul>
+          <a href="#try" class="block text-center py-3 rounded-full border border-gray-600 hover:border-purple-500 hover:bg-purple-600/10 transition text-sm font-medium">立即体验</a>
+        </div>
+        <!-- Pro -->
+        <div class="glass rounded-2xl p-8 border-2 border-purple-500 relative">
+          <div class="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-purple-600 rounded-full text-xs font-bold">推荐</div>
+          <div class="text-sm text-purple-400 mb-2">专业版</div>
+          <div class="text-4xl font-black mb-1">¥9.9<span class="text-lg font-normal text-gray-400">/次</span></div>
+          <div class="text-gray-500 text-sm mb-6">一次付费，永久使用</div>
+          <ul class="space-y-3 mb-8 text-sm">
+            <li class="flex items-center gap-2 text-gray-300"><span class="text-green-400">✓</span> 3个落地页生成</li>
+            <li class="flex items-center gap-2 text-gray-300"><span class="text-green-400">✓</span> 永久有效链接</li>
+            <li class="flex items-center gap-2 text-gray-300"><span class="text-green-400">✓</span> 全部设计模板</li>
+            <li class="flex items-center gap-2 text-gray-300"><span class="text-green-400">✓</span> 无品牌水印</li>
+            <li class="flex items-center gap-2 text-gray-500"><span class="text-gray-600">✗</span> 完整源码</li>
+          </ul>
+          <a href="#try" class="block text-center py-3 rounded-full bg-purple-600 hover:bg-purple-700 transition text-sm font-bold">立即开通</a>
+        </div>
+        <!-- Enterprise -->
+        <div class="glass rounded-2xl p-8">
+          <div class="text-sm text-gray-400 mb-2">企业版</div>
+          <div class="text-4xl font-black mb-1">¥99<span class="text-lg font-normal text-gray-400">/次</span></div>
+          <div class="text-gray-500 text-sm mb-6">完整授权</div>
+          <ul class="space-y-3 mb-8 text-sm">
+            <li class="flex items-center gap-2 text-gray-300"><span class="text-green-400">✓</span> 无限次生成</li>
+            <li class="flex items-center gap-2 text-gray-300"><span class="text-green-400">✓</span> 永久有效链接</li>
+            <li class="flex items-center gap-2 text-gray-300"><span class="text-green-400">✓</span> 完整HTML源码</li>
+            <li class="flex items-center gap-2 text-gray-300"><span class="text-green-400">✓</span> 可商用授权</li>
+            <li class="flex items-center gap-2 text-gray-300"><span class="text-green-400">✓</span> 私有化部署</li>
+          </ul>
+          <a href="#try" class="block text-center py-3 rounded-full border border-gray-600 hover:border-purple-500 hover:bg-purple-600/10 transition text-sm font-medium">联系我们</a>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    function toggleMobile() {
-        document.getElementById('mobileMenu').classList.toggle('open');
-        document.body.style.overflow = document.getElementById('mobileMenu').classList.contains('open') ? 'hidden' : '';
-    }
+  <!-- FAQ -->
+  <section class="py-24 bg-gray-900">
+    <div class="max-w-3xl mx-auto px-6">
+      <h2 class="text-4xl font-bold text-center mb-12">常见问题</h2>
+      <div class="space-y-6">
+        <div class="glass rounded-2xl p-6">
+          <h3 class="font-bold mb-2">Q: 建一个网站需要多久？</h3>
+          <p class="text-gray-400 text-sm">A: 只需要30秒。输入您的业务描述，AI自动完成设计和内容生成。</p>
+        </div>
+        <div class="glass rounded-2xl p-6">
+          <h3 class="font-bold mb-2">Q: 需要写代码或设计技能吗？</h3>
+          <p class="text-gray-400 text-sm">A: 完全不需要。只需要描述您的业务，剩下的交给AI。</p>
+        </div>
+        <div class="glass rounded-2xl p-6">
+          <h3 class="font-bold mb-2">Q: 生成的网站能在微信里打开吗？</h3>
+          <p class="text-gray-400 text-sm">A: 可以。生成的网站完全适配微信，链接可以直接发送给客户。</p>
+        </div>
+        <div class="glass rounded-2xl p-6">
+          <h3 class="font-bold mb-2">Q: 免费版和专业版有什么区别？</h3>
+          <p class="text-gray-400 text-sm">A: 免费版生成的链接24小时有效，适合体验。付费后可获得永久链接和完整源码。</p>
+        </div>
+        <div class="glass rounded-2xl p-6">
+          <h3 class="font-bold mb-2">Q: 适合哪些行业？</h3>
+          <p class="text-gray-400 text-sm">A: 几乎所有行业都可以，包括瑜伽馆、咖啡店、餐饮、摄影、教育、医疗、科技、制造等。</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    async function handleSubmit(e) {
+  <!-- Footer -->
+  <footer class="py-12 bg-gray-950 border-t border-gray-800">
+    <div class="max-w-6xl mx-auto px-6 text-center">
+      <div class="text-xl font-bold mb-4"><span class="gradient-text">AI</span>建站</div>
+      <p class="text-gray-500 text-sm mb-6">30秒生成专属落地页 · 让每个企业都能拥有专业网站</p>
+      <p class="text-gray-600 text-xs">© 2026 AI建站服务 · 技术支持：图灵AI助手</p>
+    </div>
+  </footer>
+
+  <script>
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
         e.preventDefault();
-        const form = document.getElementById('contactForm');
-        const formData = new FormData(form);
-        const submitBtn = form.querySelector('button[type="submit"]');
-        submitBtn.disabled = true;
-        submitBtn.textContent = '发送中...';
-        
-        try {
-            const response = await fetch('https://formspree.io/f/mgopondy', {
-                method: 'POST',
-                body: formData,
-                headers: { 'Accept': 'application/json' }
-            });
-            if (response.ok) {
-                form.classList.add('hidden');
-                document.getElementById('successMsg').classList.remove('hidden');
-            } else {
-                alert('发送失败，请稍后重试');
-                submitBtn.disabled = false;
-                submitBtn.textContent = '发送消息';
-            }
-        } catch (err) {
-            alert('发送失败，请稍后重试');
-            submitBtn.disabled = false;
-            submitBtn.textContent = '发送消息';
-        }
-    }
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) entry.target.classList.add('visible');
-        });
-    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-    document.querySelectorAll('.section-fade').forEach(el => observer.observe(el));
-
-    window.addEventListener('scroll', () => {
-        document.getElementById('navbar').classList.toggle('shadow-md', window.scrollY > 50);
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
     });
-
-    const savedLang = localStorage.getItem('ai-builder-lang') || 'zh';
-    setLang(savedLang);
-    </script>
+  </script>
 </body>
 </html>
