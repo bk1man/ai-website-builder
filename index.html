@@ -4,304 +4,196 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI建站 | 30秒生成专属落地页</title>
-  <meta name="description" content="输入您的业务描述，AI在30秒内为您生成一个专业的落地页。支持多种风格，手机自适应，无需任何技术背景。">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
-    * { font-family: 'Inter', 'PingFang SC', sans-serif; }
-    .gradient-text { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .gradient-hero { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); }
-    .glass { background: rgba(255,255,255,0.05); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); }
-    .float { animation: float 3s ease-in-out infinite; }
-    .pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
-    @keyframes float { 0%,100%{ transform: translateY(0px); } 50%{ transform: translateY(-12px); } }
-    @keyframes pulse-glow { 0%,100%{ box-shadow: 0 0 20px rgba(102,126,234,0.3); } 50%{ box-shadow: 0 0 40px rgba(102,126,234,0.6); } }
-    .site-card { transition: all 0.3s ease; }
-    .site-card:hover { transform: translateY(-8px) scale(1.02); }
-    .step-line { position: absolute; top: 24px; left: 50%; width: 2px; height: calc(100% - 48px); background: linear-gradient(to bottom, #667eea, #764ba2); }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', 'PingFang SC', sans-serif; }
+    body { background: #0a0a0a; color: #fff; }
+    a { text-decoration: none; color: inherit; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+    .gradient-text { background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .btn { display: inline-block; padding: 14px 36px; border-radius: 50px; font-weight: 700; font-size: 16px; cursor: pointer; border: none; transition: all 0.3s; }
+    .btn-primary { background: linear-gradient(135deg, #667eea, #764ba2); color: #fff; }
+    .btn-primary:hover { transform: scale(1.05); box-shadow: 0 8px 30px rgba(102,126,234,0.4); }
+    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+    .glass { background: rgba(255,255,255,0.05); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; }
+    nav { position: fixed; top: 0; width: 100%; z-index: 100; padding: 16px 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(10px); }
+    .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460); padding: 100px 24px; }
+    .hero h1 { font-size: clamp(36px, 7vw, 72px); font-weight: 900; line-height: 1.1; margin-bottom: 24px; }
+    .hero p { font-size: 20px; color: #aaa; margin-bottom: 48px; }
+    .input-group { display: flex; gap: 12px; max-width: 700px; margin: 0 auto; flex-wrap: wrap; justify-content: center; }
+    .input-group input, .input-group select { padding: 16px 20px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); color: #fff; font-size: 16px; outline: none; transition: border-color 0.3s; }
+    .input-group input:focus, .input-group select:focus { border-color: #667eea; }
+    .input-group input { flex: 1; min-width: 300px; }
+    .input-group select { min-width: 140px; }
+    .input-group select option { background: #1a1a2e; color: #fff; }
+    .result { margin-top: 24px; text-align: center; display: none; }
+    .result a { color: #667eea; font-size: 18px; font-weight: 600; }
+    .result a:hover { text-decoration: underline; }
+    .loading { display: none; margin-top: 16px; }
+    .loading .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #667eea; margin: 0 4px; animation: bounce 1.4s infinite ease-in-out both; }
+    .loading .dot:nth-child(1) { animation-delay: -0.32s; }
+    .loading .dot:nth-child(2) { animation-delay: -0.16s; }
+    @keyframes bounce { 0%,80%,100% { transform: scale(0); } 40% { transform: scale(1); } }
+    .error { color: #ff6b6b; margin-top: 12px; display: none; }
+    .section { padding: 80px 0; }
+    .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+    .feature-card { background: #111; padding: 32px; border-radius: 16px; text-align: center; transition: transform 0.3s; }
+    .feature-card:hover { transform: translateY(-5px); }
+    .feature-card .icon { font-size: 48px; margin-bottom: 16px; }
+    .feature-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 10px; }
+    .feature-card p { color: #888; line-height: 1.6; }
+    .step { display: flex; align-items: center; gap: 20px; margin-bottom: 32px; }
+    .step-num { width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, #667eea, #764ba2); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 20px; flex-shrink: 0; }
+    footer { padding: 24px 0; text-align: center; color: #666; font-size: 14px; }
+    @media(max-width:768px) { .input-group { flex-direction: column; } .input-group input { min-width: auto; } }
   </style>
 </head>
-<body class="bg-gray-950 text-white">
+<body>
 
-  <!-- Nav -->
-  <nav class="fixed top-0 w-full z-50 bg-gray-950/80 backdrop-blur-md border-b border-gray-800">
-    <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-      <div class="text-xl font-bold"><span class="gradient-text">AI</span>建站</div>
-      <div class="flex gap-6 items-center text-sm text-gray-400">
-        <a href="#features" class="hover:text-white transition">功能</a>
-        <a href="#examples" class="hover:text-white transition">案例</a>
-        <a href="#pricing" class="hover:text-white transition">价格</a>
-        <a href="#try" class="px-5 py-2 bg-purple-600 hover:bg-purple-700 rounded-full text-white font-medium transition">立即体验</a>
+  <nav>
+    <div class="container" style="display:flex;justify-content:space-between;align-items:center">
+      <div style="font-size:20px;font-weight:800"><span class="gradient-text">AI</span>建站</div>
+      <div style="display:flex;gap:24px;align-items:center;font-size:14px;color:#888">
+        <a href="#how" style="color:#888">如何使用</a>
+        <a href="#features" style="color:#888">功能</a>
+        <a href="#try" class="btn btn-primary" style="padding:10px 24px;font-size:14px">立即体验</a>
       </div>
     </div>
   </nav>
 
-  <!-- Hero -->
-  <section class="gradient-hero min-h-screen flex items-center justify-center text-center px-6 pt-20 pb-16">
-    <div class="max-w-4xl">
-      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-900/30 border border-purple-500/30 text-purple-300 text-sm mb-8">
-        <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-        公众号AI客服已集成上线
-      </div>
-      <h1 class="text-5xl md:text-7xl font-black mb-6 leading-tight">
+  <!-- Hero + 核心功能 -->
+  <section class="hero" id="try">
+    <div style="max-width:800px;width:100%">
+      <h1>
         <span class="gradient-text">30秒</span><br>
-        <span class="text-white">生成专属落地页</span>
+        生成专属落地页
       </h1>
-      <p class="text-xl text-gray-400 mb-10 max-w-2xl mx-auto leading-relaxed">
-        输入您的业务描述，AI自动生成专业落地页。无需设计技能，无需代码知识。<br>
-        支持微信内直接访问，适合各类中小企业和个人创业者。
-      </p>
-      <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-        <a href="#try" class="px-10 py-4 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 rounded-full text-lg font-bold transition shadow-2xl shadow-purple-600/30 float">
-          立即体验 →
-        </a>
-        <a href="#examples" class="px-10 py-4 glass rounded-full text-lg font-medium hover:bg-white/10 transition">
-          查看案例
-        </a>
+      <p>输入您的业务描述，AI 自动生成专业落地页，支持多种风格，手机自适应</p>
+      
+      <!-- 核心交互区 -->
+      <div class="input-group">
+        <input type="text" id="desc" placeholder="例如：一家做宠物寄养的小店，需要一个温馨的展示页面" maxlength="500">
+        <select id="template">
+          <option value="modern">现代商务</option>
+          <option value="minimal">极简白</option>
+          <option value="dark">暗黑科技</option>
+        </select>
+        <button class="btn btn-primary" id="generate-btn" onclick="generate()">生成网站</button>
       </div>
-      <div class="flex justify-center gap-8 text-sm text-gray-500">
-        <span>✓ 无需信用卡</span>
-        <span>✓ 30秒生成</span>
-        <span>✓ 微信直接访问</span>
+      
+      <div class="loading" id="loading">
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+        <p style="margin-top:12px;color:#888">AI 正在为您生成专属页面...</p>
       </div>
-    </div>
-  </section>
-
-  <!-- How it works -->
-  <section class="py-24 bg-gray-900">
-    <div class="max-w-5xl mx-auto px-6">
-      <h2 class="text-4xl font-bold text-center mb-16">简单3步，立刻拥有网站</h2>
-      <div class="grid md:grid-cols-3 gap-8">
-        <div class="text-center">
-          <div class="w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-purple-600 to-purple-800 flex items-center justify-center text-2xl font-bold shadow-lg">1</div>
-          <h3 class="text-xl font-bold mb-3">描述您的业务</h3>
-          <p class="text-gray-400">在公众号对话框输入，比如："瑜伽馆，主打私教课，风格清新自然"</p>
-        </div>
-        <div class="text-center">
-          <div class="w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-purple-600 to-purple-800 flex items-center justify-center text-2xl font-bold shadow-lg">2</div>
-          <h3 class="text-xl font-bold mb-3">AI自动生成</h3>
-          <p class="text-gray-400">30秒内生成专属落地页，包含品牌介绍、产品展示、联系方式等完整内容</p>
-        </div>
-        <div class="text-center">
-          <div class="w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-purple-600 to-purple-800 flex items-center justify-center text-2xl font-bold shadow-lg">3</div>
-          <h3 class="text-xl font-bold mb-3">微信直接访问</h3>
-          <p class="text-gray-400">链接直接发送到微信，随时分享给客户。支持临时体验和永久托管</p>
-        </div>
+      
+      <div class="error" id="error"></div>
+      
+      <div class="result" id="result">
+        <p style="color:#888;margin-bottom:8px">✅ 您的网站已生成！</p>
+        <a id="result-link" href="#" target="_blank"></a>
+        <p style="color:#666;font-size:14px;margin-top:8px">链接永久有效，可直接分享给客户</p>
       </div>
     </div>
   </section>
 
-  <!-- Features -->
-  <section id="features" class="py-24 bg-gray-950">
-    <div class="max-w-6xl mx-auto px-6">
-      <h2 class="text-4xl font-bold text-center mb-4">为什么选择AI建站？</h2>
-      <p class="text-gray-400 text-center mb-16">传统建站需要几天，我们只需要30秒</p>
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div class="glass rounded-2xl p-8 hover:bg-white/8 transition">
-          <div class="text-3xl mb-4">⚡</div>
-          <h3 class="text-lg font-bold mb-2">30秒极速生成</h3>
-          <p class="text-gray-400 text-sm">传统建站需要几天，我们只需要30秒。输入描述，立即看到结果。</p>
+  <!-- 如何使用 -->
+  <section class="section" id="how" style="background:#111">
+    <div class="container" style="max-width:800px">
+      <h2 style="text-align:center;font-size:36px;font-weight:800;margin-bottom:48px">如何使用</h2>
+      <div class="step">
+        <div class="step-num">1</div>
+        <div>
+          <h3 style="font-size:18px;font-weight:700;margin-bottom:4px">描述您的业务</h3>
+          <p style="color:#888">用一句话告诉我们您是做什么的，越详细越好</p>
         </div>
-        <div class="glass rounded-2xl p-8 hover:bg-white/8 transition">
-          <div class="text-3xl mb-4">🎨</div>
-          <h3 class="text-lg font-bold mb-2">专业设计水准</h3>
-          <p class="text-gray-400 text-sm">AI生成专业级设计，包括渐变、动画、响应式布局，无需设计师。</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div>
+          <h3 style="font-size:18px;font-weight:700;margin-bottom:4px">选择风格</h3>
+          <p style="color:#888">现代商务、极简白、暗黑科技，选一个适合您的</p>
         </div>
-        <div class="glass rounded-2xl p-8 hover:bg-white/8 transition">
-          <div class="text-3xl mb-4">📱</div>
-          <h3 class="text-lg font-bold mb-2">完美移动端适配</h3>
-          <p class="text-gray-400 text-sm">所有页面自动适配手机、平板、电脑。微信内打开体验流畅。</p>
-        </div>
-        <div class="glass rounded-2xl p-8 hover:bg-white/8 transition">
-          <div class="text-3xl mb-4">💬</div>
-          <h3 class="text-lg font-bold mb-2">微信内直接触达</h3>
-          <p class="text-gray-400 text-sm">链接直接发送到客户微信，无需跳转浏览器，转化率更高。</p>
-        </div>
-        <div class="glass rounded-2xl p-8 hover:bg-white/8 transition">
-          <div class="text-3xl mb-4">🔄</div>
-          <h3 class="text-lg font-bold mb-2">随时修改调整</h3>
-          <p class="text-gray-400 text-sm">不满意？告诉AI想改什么，立刻生成新版。不限次数，直到满意为止。</p>
-        </div>
-        <div class="glass rounded-2xl p-8 hover:bg-white/8 transition">
-          <div class="text-3xl mb-4">💰</div>
-          <h3 class="text-lg font-bold mb-2">极低成本体验</h3>
-          <p class="text-gray-400 text-sm">免费体验临时链接。付费解锁永久链接和完整源码。</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div>
+          <h3 style="font-size:18px;font-weight:700;margin-bottom:4px">获得链接</h3>
+          <p style="color:#888">30秒后获得专属链接，直接发给客户就能看</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Examples -->
-  <section id="examples" class="py-24 bg-gray-900">
-    <div class="max-w-6xl mx-auto px-6">
-      <h2 class="text-4xl font-bold text-center mb-4">AI生成的案例</h2>
-      <p class="text-gray-400 text-center mb-16">点击即可查看真实由AI生成的落地页</p>
-      <div class="grid md:grid-cols-3 gap-8">
-        <!-- Example 1: Yoga -->
-        <a href="https://ysywlkj.xyz/temp/f06b4fae.html" target="_blank" class="site-card glass rounded-2xl overflow-hidden cursor-pointer block">
-          <div class="h-48 bg-gradient-to-br from-purple-600 to-pink-600 flex items-center justify-center">
-            <div class="text-center text-white">
-              <div class="text-4xl mb-2">🧘</div>
-              <div class="text-sm opacity-80">瑜伽馆</div>
-            </div>
-          </div>
-          <div class="p-6">
-            <div class="text-sm text-purple-400 mb-1">🧘 瑜伽健身</div>
-            <h3 class="font-bold mb-1">慢时光瑜伽馆</h3>
-            <p class="text-gray-400 text-sm">私教课 + 团课，清新自然风格</p>
-          </div>
-        </a>
-        <!-- Example 2: Coffee -->
-        <a href="https://ysywlkj.xyz/temp/c533363b.html" target="_blank" class="site-card glass rounded-2xl overflow-hidden cursor-pointer block">
-          <div class="h-48 bg-gradient-to-br from-amber-600 to-orange-700 flex items-center justify-center">
-            <div class="text-center text-white">
-              <div class="text-4xl mb-2">☕</div>
-              <div class="text-sm opacity-80">咖啡店</div>
-            </div>
-          </div>
-          <div class="p-6">
-            <div class="text-sm text-purple-400 mb-1">☕ 餐饮美食</div>
-            <h3 class="font-bold mb-1">慢时光手冲咖啡</h3>
-            <p class="text-gray-400 text-sm">手冲咖啡 + 甜点，复古文艺风</p>
-          </div>
-        </a>
-        <!-- Example 3: Drone -->
-        <a href="https://ysywlkj.xyz/temp/0845db05.html" target="_blank" class="site-card glass rounded-2xl overflow-hidden cursor-pointer block">
-          <div class="h-48 bg-gradient-to-br from-slate-700 to-slate-900 flex items-center justify-center">
-            <div class="text-center text-white">
-              <div class="text-4xl mb-2">✈️</div>
-              <div class="text-sm opacity-80">无人机</div>
-            </div>
-          </div>
-          <div class="p-6">
-            <div class="text-sm text-purple-400 mb-1">✈️ 科技制造</div>
-            <h3 class="font-bold mb-1">疆安航空科技</h3>
-            <p class="text-gray-400 text-sm">无人机定制开发，高大上风格</p>
-          </div>
-        </a>
-      </div>
-      <p class="text-center text-gray-500 text-sm mt-8">真实案例 · 点击即可预览</p>
-    </div>
-  </section>
-
-  <!-- Try Now -->
-  <section id="try" class="py-24 gradient-hero">
-    <div class="max-w-3xl mx-auto px-6 text-center">
-      <h2 class="text-4xl md:text-5xl font-bold mb-6">现在就开始体验</h2>
-      <p class="text-xl text-gray-300 mb-10">关注公众号，发送"建站"，AI立刻为您生成专属落地页</p>
-      <div class="glass rounded-3xl p-10 max-w-md mx-auto pulse-glow">
-        <div class="text-6xl mb-6">📱</div>
-        <h3 class="text-2xl font-bold mb-3">微信公众号</h3>
-        <p class="text-gray-400 mb-6">搜索或扫码关注：<span class="text-white font-medium">AI建站服务</span></p>
-        <div class="inline-block p-4 bg-white rounded-xl">
-          <p class="text-gray-600 text-sm mb-2">发送消息：<strong>建站</strong></p>
-          <p class="text-gray-500 text-xs">AI将在30秒内为您生成网站</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Pricing -->
-  <section id="pricing" class="py-24 bg-gray-950">
-    <div class="max-w-5xl mx-auto px-6">
-      <h2 class="text-4xl font-bold text-center mb-4">简单透明的定价</h2>
-      <p class="text-gray-400 text-center mb-16">按需选择，无需年费</p>
-      <div class="grid md:grid-cols-3 gap-8">
-        <!-- Free -->
-        <div class="glass rounded-2xl p-8">
-          <div class="text-sm text-gray-400 mb-2">体验版</div>
-          <div class="text-4xl font-black mb-1">免费</div>
-          <div class="text-gray-500 text-sm mb-6">限时体验</div>
-          <ul class="space-y-3 mb-8 text-sm">
-            <li class="flex items-center gap-2 text-gray-300"><span class="text-green-400">✓</span> 1个落地页生成</li>
-            <li class="flex items-center gap-2 text-gray-300"><span class="text-green-400">✓</span> 24小时有效链接</li>
-            <li class="flex items-center gap-2 text-gray-300"><span class="text-green-400">✓</span> 基础设计模板</li>
-            <li class="flex items-center gap-2 text-gray-500"><span class="text-gray-600">✗</span> 永久链接</li>
-            <li class="flex items-center gap-2 text-gray-500"><span class="text-gray-600">✗</span> 完整源码</li>
-          </ul>
-          <a href="#try" class="block text-center py-3 rounded-full border border-gray-600 hover:border-purple-500 hover:bg-purple-600/10 transition text-sm font-medium">立即体验</a>
-        </div>
-        <!-- Pro -->
-        <div class="glass rounded-2xl p-8 border-2 border-purple-500 relative">
-          <div class="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-purple-600 rounded-full text-xs font-bold">推荐</div>
-          <div class="text-sm text-purple-400 mb-2">专业版</div>
-          <div class="text-4xl font-black mb-1">¥9.9<span class="text-lg font-normal text-gray-400">/次</span></div>
-          <div class="text-gray-500 text-sm mb-6">一次付费，永久使用</div>
-          <ul class="space-y-3 mb-8 text-sm">
-            <li class="flex items-center gap-2 text-gray-300"><span class="text-green-400">✓</span> 3个落地页生成</li>
-            <li class="flex items-center gap-2 text-gray-300"><span class="text-green-400">✓</span> 永久有效链接</li>
-            <li class="flex items-center gap-2 text-gray-300"><span class="text-green-400">✓</span> 全部设计模板</li>
-            <li class="flex items-center gap-2 text-gray-300"><span class="text-green-400">✓</span> 无品牌水印</li>
-            <li class="flex items-center gap-2 text-gray-500"><span class="text-gray-600">✗</span> 完整源码</li>
-          </ul>
-          <a href="#try" class="block text-center py-3 rounded-full bg-purple-600 hover:bg-purple-700 transition text-sm font-bold">立即开通</a>
-        </div>
-        <!-- Enterprise -->
-        <div class="glass rounded-2xl p-8">
-          <div class="text-sm text-gray-400 mb-2">企业版</div>
-          <div class="text-4xl font-black mb-1">¥99<span class="text-lg font-normal text-gray-400">/次</span></div>
-          <div class="text-gray-500 text-sm mb-6">完整授权</div>
-          <ul class="space-y-3 mb-8 text-sm">
-            <li class="flex items-center gap-2 text-gray-300"><span class="text-green-400">✓</span> 无限次生成</li>
-            <li class="flex items-center gap-2 text-gray-300"><span class="text-green-400">✓</span> 永久有效链接</li>
-            <li class="flex items-center gap-2 text-gray-300"><span class="text-green-400">✓</span> 完整HTML源码</li>
-            <li class="flex items-center gap-2 text-gray-300"><span class="text-green-400">✓</span> 可商用授权</li>
-            <li class="flex items-center gap-2 text-gray-300"><span class="text-green-400">✓</span> 私有化部署</li>
-          </ul>
-          <a href="#try" class="block text-center py-3 rounded-full border border-gray-600 hover:border-purple-500 hover:bg-purple-600/10 transition text-sm font-medium">联系我们</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FAQ -->
-  <section class="py-24 bg-gray-900">
-    <div class="max-w-3xl mx-auto px-6">
-      <h2 class="text-4xl font-bold text-center mb-12">常见问题</h2>
-      <div class="space-y-6">
-        <div class="glass rounded-2xl p-6">
-          <h3 class="font-bold mb-2">Q: 建一个网站需要多久？</h3>
-          <p class="text-gray-400 text-sm">A: 只需要30秒。输入您的业务描述，AI自动完成设计和内容生成。</p>
-        </div>
-        <div class="glass rounded-2xl p-6">
-          <h3 class="font-bold mb-2">Q: 需要写代码或设计技能吗？</h3>
-          <p class="text-gray-400 text-sm">A: 完全不需要。只需要描述您的业务，剩下的交给AI。</p>
-        </div>
-        <div class="glass rounded-2xl p-6">
-          <h3 class="font-bold mb-2">Q: 生成的网站能在微信里打开吗？</h3>
-          <p class="text-gray-400 text-sm">A: 可以。生成的网站完全适配微信，链接可以直接发送给客户。</p>
-        </div>
-        <div class="glass rounded-2xl p-6">
-          <h3 class="font-bold mb-2">Q: 免费版和专业版有什么区别？</h3>
-          <p class="text-gray-400 text-sm">A: 免费版生成的链接24小时有效，适合体验。付费后可获得永久链接和完整源码。</p>
-        </div>
-        <div class="glass rounded-2xl p-6">
-          <h3 class="font-bold mb-2">Q: 适合哪些行业？</h3>
-          <p class="text-gray-400 text-sm">A: 几乎所有行业都可以，包括瑜伽馆、咖啡店、餐饮、摄影、教育、医疗、科技、制造等。</p>
-        </div>
+  <!-- 功能 -->
+  <section class="section" id="features">
+    <div class="container">
+      <h2 style="text-align:center;font-size:36px;font-weight:800;margin-bottom:48px">为什么选择我们</h2>
+      <div class="features-grid">
+        <div class="feature-card"><div class="icon">⚡</div><h3>极速生成</h3><p>30秒内完成，不需要等</p></div>
+        <div class="feature-card"><div class="icon">📱</div><h3>手机自适应</h3><p>手机、平板、电脑完美展示</p></div>
+        <div class="feature-card"><div class="icon">🎨</div><h3>多种风格</h3><p>商务、极简、科技，总有一款适合</p></div>
+        <div class="feature-card"><div class="icon">🔗</div><h3>永久链接</h3><p>生成的页面永久可用，随时分享</p></div>
+        <div class="feature-card"><div class="icon">💰</div><h3>完全免费</h3><p>基础版永久免费，无任何隐藏费用</p></div>
+        <div class="feature-card"><div class="icon">🤖</div><h3>AI 智能</h3><p>大模型理解你的业务，生成专业内容</p></div>
       </div>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer class="py-12 bg-gray-950 border-t border-gray-800">
-    <div class="max-w-6xl mx-auto px-6 text-center">
-      <div class="text-xl font-bold mb-4"><span class="gradient-text">AI</span>建站</div>
-      <p class="text-gray-500 text-sm mb-6">30秒生成专属落地页 · 让每个企业都能拥有专业网站</p>
-      <p class="text-gray-600 text-xs">© 2026 AI建站服务 · 技术支持：图灵AI助手</p>
+  <footer>
+    <div class="container">
+      <p>© 2026 AI建站 | ysywlkj.xyz | 免费帮你拥有专业落地页</p>
     </div>
   </footer>
 
   <script>
-    // Smooth scroll
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      });
+    async function generate() {
+      const desc = document.getElementById('desc').value.trim();
+      const template = document.getElementById('template').value;
+      const btn = document.getElementById('generate-btn');
+      const loading = document.getElementById('loading');
+      const result = document.getElementById('result');
+      const error = document.getElementById('error');
+      
+      if (!desc) { error.textContent = '请输入业务描述'; error.style.display = 'block'; return; }
+      
+      btn.disabled = true;
+      btn.textContent = '生成中...';
+      loading.style.display = 'block';
+      result.style.display = 'none';
+      error.style.display = 'none';
+      
+      try {
+        const resp = await fetch('/api/generate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ description: desc, template: template })
+        });
+        const data = await resp.json();
+        
+        if (data.ok) {
+          document.getElementById('result-link').href = data.url;
+          document.getElementById('result-link').textContent = data.url;
+          result.style.display = 'block';
+        } else {
+          error.textContent = data.error || '生成失败，请重试';
+          error.style.display = 'block';
+        }
+      } catch (e) {
+        error.textContent = '网络错误，请检查连接';
+        error.style.display = 'block';
+      } finally {
+        btn.disabled = false;
+        btn.textContent = '生成网站';
+        loading.style.display = 'none';
+      }
+    }
+    
+    // 回车提交
+    document.getElementById('desc').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') generate();
     });
   </script>
+
 </body>
 </html>
